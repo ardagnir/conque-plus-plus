@@ -221,6 +221,9 @@ class Conque:
         """ Add character ordinal to input buffer. In case we're not allowed to modify buffer a time of input. """
         self.input_buffer.append(chr)
 
+    def peak(self):
+        """ Check if subprocess has output that can be read. """
+        return self.proc.peak()
 
     def read(self, timeout=1, set_cursor=True, return_output=False, update_buffer=True):
         """ Read new output from the subprocess and update the Vim buffer.

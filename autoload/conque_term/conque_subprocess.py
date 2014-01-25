@@ -1,9 +1,12 @@
 # FILE:     autoload/conque_term/conque_subprocess.py
-# AUTHOR:   Nico Raffo <nicoraffo@gmail.com>
-# WEBSITE:  http://conque.googlecode.com
-# MODIFIED: __MODIFIED__
-# VERSION:  __VERSION__, for Vim 7.0
+# MAINTAINER:  James Kolb <jck1089@gmail.com>
+# ORIGINAL AUTHOR:   Nico Raffo <nicoraffo@gmail.com>
+# WEBSITE:  http://github.com/ardagnir/conque-plus-plus
 # LICENSE:
+# Conque++ - Improved Vim terminal/console emulator
+# Copyright (C) 2013-2014 James Kolb
+#
+# Conque++ is a fork of Conque:
 # Conque - Vim terminal/console emulator
 # Copyright (C) 2009-__YEAR__ Nico Raffo
 #
@@ -62,6 +65,8 @@ class ConqueSubprocess:
     # stdout+stderr file descriptor
     fd = None
 
+    peakString = ''
+
 
     def open(self, command, env={}):
         """ Create subprocess using forkpty() """
@@ -107,11 +112,17 @@ class ConqueSubprocess:
         else:
             pass
 
+    def peak(self):
+        """ Check if there is anything in subprocess to read """
+
+        self.peakString = self.read(0)
+        return len(self.peakString)>0
 
     def read(self, timeout=1):
         """ Read from subprocess and return new output """
 
-        output = ''
+        output = self.peakString
+        self.peakString = ''
         read_timeout = float(timeout) / 1000
         read_ct = 0
 

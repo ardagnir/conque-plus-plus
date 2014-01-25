@@ -1375,6 +1375,16 @@ function! s:term_obj.focus() dict " {{{
 
 endfunction " }}}
 
+" check if terminal buffer has changes that can be read
+function! s:term_obj.peak() dict 
+  let outputFound = 0
+  try
+      sil exec s:py . "\nif " . self.var . ".peak():\n    vim.command('let outputFound = 1')\n"
+  catch
+  endtry
+  return outputFound
+endfunction
+
 " read from terminal buffer and return string
 function! s:term_obj.read(...) dict " {{{
 
