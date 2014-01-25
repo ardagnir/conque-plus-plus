@@ -1,9 +1,12 @@
 # FILE:     autoload/conque_term/conque.py 
-# AUTHOR:   Nico Raffo <nicoraffo@gmail.com>
-# WEBSITE:  http://conque.googlecode.com
-# MODIFIED: __MODIFIED__
-# VERSION:  __VERSION__, for Vim 7.0
+# MAINTAINER:  James Kolb <jck1089@gmail.com>
+# ORIGINAL AUTHOR:   Nico Raffo <nicoraffo@gmail.com>
+# WEBSITE:  http://github.com/ardagnir/conque-plus-plus
 # LICENSE:
+# Conque++ - Improved Vim terminal/console emulator
+# Copyright (C) 2013-2014 James Kolb
+#
+# Conque++ is a fork of Conque:
 # Conque - Vim terminal/console emulator
 # Copyright (C) 2009-__YEAR__ Nico Raffo
 #
@@ -170,7 +173,8 @@ class Conque:
 
 
 
-    def write_ord(self, input, set_cursor=True, read=True):
+    def write_ord(self, input, set_cursor=True, read = vim.eval('g:ConquePlusPlus_ReadOnWrite')):
+
         """ Write a single character to the subprocess, using an unicode ordinal. """
 
         if CONQUE_PYTHON_VERSION == 2:
@@ -557,7 +561,8 @@ class Conque:
 
         syntax_name = 'ConqueHighLightAt_%d_%d_%d_%d' % (self.proc.pid, self.l, start, len(self.color_history) + 1)
         syntax_options = 'contains=ALLBUT,ConqueString,MySQLString,MySQLKeyword oneline'
-        syntax_region = 'syntax match %s /\%%%dl\%%>%dc.\{%d}\%%<%dc/ %s' % (syntax_name, buffer_line, start - 1, end - start, end + 1, syntax_options)
+        colorOffset = vim.eval("g:ConquePlusPlus_ColorOffset")
+        syntax_region = 'syntax match %s /^\%%%dl%s.\{%d}\zs.\{%d}/ %s' % (syntax_name, buffer_line, colorOffset,start - 1, end - start, syntax_options)
 
         # check for cached highlight group
         hgroup = 'ConqueHL_%d' % (abs(hash(highlight)))

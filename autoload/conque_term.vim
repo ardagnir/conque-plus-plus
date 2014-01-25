@@ -1,9 +1,12 @@
 " FILE:     autoload/conque_term.vim {{{
-" AUTHOR:   Nico Raffo <nicoraffo@gmail.com>
-" WEBSITE:  http://conque.googlecode.com
-" MODIFIED: __MODIFIED__
-" VERSION:  __VERSION__, for Vim 7.0
+" MAINTAINER:  James Kolb <jck1089@gmail.com>
+" ORIGINAL AUTHOR:   Nico Raffo <nicoraffo@gmail.com>
+" WEBSITE:  http://github.com/ardagnir/conque-plus-plus
 " LICENSE:
+" Conque++ - Improved Vim terminal/console emulator
+" Copyright (C) 2013-2014 James Kolb
+"
+" Conque++ is a fork of Conque:
 " Conque - Vim terminal/console emulator
 " Copyright (C) 2009-__YEAR__ Nico Raffo 
 "
@@ -37,6 +40,22 @@
 " load plugin file if it hasn't already been loaded (e.g. conque_term#foo() is used in .vimrc)
 if !exists('g:ConqueTerm_Loaded')
     runtime! plugin/conque_term.vim
+endif
+
+"This is a string addded in front of the coloring regex
+if !exists('g:ConquePlusPlus_ColorOffset')
+  let g:ConquePlusPlus_ColorOffset=''
+endif
+
+"If this is set to 0, conque++ is not allowed to set the updatetime
+if !exists('g:ConquePlusPlus_SetUpdateTime')
+  let g:ConquePlusPlus_SetUpdateTime=1
+endif
+
+"If this is set to 0, conque++ won't default to reading from the terminal each
+"time it is written to
+if !exists('g:ConquePlusPlus_ReadOnWrite')
+  let g:ConquePlusPlus_ReadOnWrite=1
 endif
 
 " path to conque install directories
@@ -975,8 +994,10 @@ function! conque_term#on_focus(...) " {{{
         autocmd! ConqueTerm CursorHold *
     endif
 
-    " set poll interval to 50ms
-    set updatetime=50
+    if g:ConquePlusPlus_SetUpdateTime
+      " set poll interval to 50ms
+      set updatetime=50
+    endif
 
     " resume subprocess fast polling
     if startup == 0 && exists('b:ConqueTerm_Var')
@@ -1010,13 +1031,17 @@ function! conque_term#on_blur() " {{{
 
     " reset poll interval
     if g:ConqueTerm_ReadUnfocused == 1
-        set updatetime=1000
+        if g:ConquePlusPlus_SetUpdateTime
+          set updatetime=1000
+        endif
         autocmd ConqueTerm CursorHoldI * call conque_term#read_all(1)
         autocmd ConqueTerm CursorHold * call conque_term#read_all(0)
     elseif exists('s:save_updatetime')
         exe 'set updatetime=' . s:save_updatetime
     else
-        set updatetime=2000
+        if g:ConquePlusPlus_SetUpdateTime
+          set updatetime=2000
+        endif
     endif
 
     " call user defined functions
