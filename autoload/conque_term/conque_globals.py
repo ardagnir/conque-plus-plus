@@ -117,6 +117,7 @@ CONQUE_ESCAPE = {
     'G': 'cursor_to_column',
     'H': 'cursor',
     'P': 'delete_chars',
+    'X': 'clear_chars',
     'f': 'cursor',
     'g': 'tab_clear',
     'r': 'set_coords',
