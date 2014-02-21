@@ -846,7 +846,7 @@ class Conque:
         self.screen[self.l] = self.screen[self.l][:self.c] + self.screen[self.l][self.c + csi['val']:]
 
     def csi_clear_chars(self, csi):
-        self.screen[self.l] = self.screen[self.l][:self.c] + ' '*csi['val'] + self.screen[self.l][self.c + csi['val']:]
+        self.screen[self.l] = self.screen[self.l][:self.c - 1] + ' '*csi['val'] + self.screen[self.l][self.c + csi['val']-1:]
 
     def csi_add_spaces(self, csi):
         self.screen[self.l] = self.screen[self.l][: self.c - 1] + ' ' * csi['val'] + self.screen[self.l][self.c:]
