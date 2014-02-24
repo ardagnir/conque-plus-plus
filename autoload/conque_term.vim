@@ -652,7 +652,7 @@ function! conque_term#set_mappings(action) "{{{
 
         " check for resized/scrolled buffer when entering buffer
         sil exe 'autocmd ' . b:ConqueTerm_Var . ' BufEnter <buffer> ' . s:py . ' ' . b:ConqueTerm_Var . '.update_window_size()'
-        sil exe 'autocmd ' . b:ConqueTerm_Var . ' VimResized ' . s:py . ' ' . b:ConqueTerm_Var . '.update_window_size()'
+        sil exe 'autocmd ' . b:ConqueTerm_Var . ' VimResized <buffer> ' . s:py . ' ' . b:ConqueTerm_Var . '.update_window_size()'
 
         " set/reset updatetime on entering/exiting buffer
         sil exe 'autocmd ' . b:ConqueTerm_Var . ' BufEnter <buffer> call conque_term#on_focus()'
