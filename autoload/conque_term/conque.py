@@ -788,6 +788,9 @@ class Conque:
         """ Process the move cursor to column escape sequence. """
         self.c = self.bound(csi['val'], 1, self.working_columns)
 
+    def csi_cursor_to_row(self, csi):
+        """ Process the move cursor to row escape sequence. """
+        self.l = self.bound(csi['val'], 1, self.lines)
 
     def csi_cursor_up(self, csi):
         """ Process the move cursor up escape sequence. """

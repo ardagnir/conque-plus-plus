@@ -75,8 +75,8 @@ def uchr(str):
 
 # enable logging # DEBUG
 CONQUE_LOG_FILENAME = None # DEBUG
-if os.path.exists('/home/nraffo/.vim/'): # DEBUG
-    CONQUE_LOG_FILENAME = '/home/nraffo/.vim/pylog.log' # DEBUG
+if os.path.exists('/tmp/conquelog/'): # DEBUG
+    CONQUE_LOG_FILENAME = '/tmp/conquelog/pylog.log' # DEBUG
 elif os.path.exists('C:/Documents and Settings/nraffo/vimfiles/'): # DEBUG
     CONQUE_LOG_FILENAME = 'C:/Documents and Settings/nraffo/vimfiles/pylog.log' # DEBUG
 elif os.path.exists('/Users/nraffo/vimfiles/'): # DEBUG
@@ -122,7 +122,8 @@ CONQUE_ESCAPE = {
     'g': 'tab_clear',
     'r': 'set_coords',
     'h': 'set',
-    'l': 'reset'
+    'l': 'reset',
+    'd': 'cursor_to_row'
 }
 #    'L': 'insert_lines',
 #    'M': 'delete_lines',
